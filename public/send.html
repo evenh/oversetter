@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <title>Oversett tekst</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Oversett tekst</h1>
+    </header>
+    <form role="form" action="">
+      <div class="form-group">
+        <label for="inputText">Tekst</label>
+        <textarea class="form-control" id="inputText" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia blanditiis facilis adipisci consectetur nisi quam sapiente, totam obcaecati optio? Quisquam ullam explicabo, quasi neque impedit quis sint adipisci saepe, harum."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-default">Oversett!</button>
+    </form>
+  </div>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    var socket = io();
+    $('form').submit(function(){
+      socket.emit('translateEvent', { string: $('#inputText').val() });
+      // Oppdater GUI
+      $('#inputText').val('');
+      return false;
+    });
+</script>
+</body>
+</html>

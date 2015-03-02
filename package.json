@@ -1,0 +1,24 @@
+{
+  "name": "hioa-translator",
+  "version": "1.0.0",
+  "description": "A simple online translator",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hioa",
+    "open",
+    "day",
+    "2015"
+  ],
+  "author": "Even Holthe",
+  "license": "MIT",
+  "dependencies": {
+    "bing-translate": "0.0.2",
+    "dotenv": "^0.5.1",
+    "express": "^4.12.1",
+    "socket.io": "^1.3.4"
+  }
+}
