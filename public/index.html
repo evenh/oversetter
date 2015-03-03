@@ -4,26 +4,31 @@
   <meta charset="UTF-8">
   <title>Oversettelser</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="animate.css">
+  <link rel="stylesheet" href="flag-icon.css">
   <style>
-    .translationBox { border: 1px solid #eee; }
-  </style>
+  /*.panel-title { font-size: 2em;}
+  .panel-body { font-size: 3em;}*/
+  /* .container { width: 100%; margin-top: 2em;}*/
+  .logo { width: 100%; margin-bottom: 1em; }
+  .table-nonfluid { width: auto !important; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Oversettelser <small>på løpende bånd</small></h1>
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <h1 class="text-center text-danger"><script>document.write(document.URL);</script>send.html</h1>
+    </div>
+  </nav>
+  <div id="mainContainer" class="container">
 
-    <section id="translationHolder">
+  <section id="translationHolder">
+      <h1 id="noTranslations" class="text-muted text-center">Ingen oversettelser enda…</h1>
     </section>
   </div>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
-    var socket = io();
-
-    socket.on('translatedObject', function(message){
-      console.log(message);
-      $('#translationHolder').prepend('<div class="panel panel-default translationBox"><div class="panel-heading"><h3 class="panel-title">' +  message.string + '</h3></div><div class="panel-body">Panel content</div></div>');
-    });
-  </script>
+  <script src="timeago.js"></script>
+  <script src="translator.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@ dotenv.load();
 var EventEmitter = require('events').EventEmitter;
 var events = new EventEmitter();
 
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bt = require('bing-translate').init({
@@ -15,54 +16,54 @@ var bt = require('bing-translate').init({
 });
 
 
-var languages = ['en', 'it', 'fr', 'fa', 'ru'];
-var langCount = languages.length;
-
+var translated = [];
+var languages = ['en', 'it', 'fr', 'ru'];
 var port = process.env.PORT || 3000;
 
+app.use(express.static(__dirname + '/public'));
+
+http.listen(port, function(){
+  console.log('listening on *:' + port);
+});
+
+
 var translateText = function(object, callback){
+  var langCount = languages.length;
   var translations = {};
 
   languages.forEach(function(lang){
     bt.translate(object.string, process.env.DEFAULT_LANGUAGE, lang, function(err, res){
       if(err) console.log(err);
       translations[lang] = res.translated_text;
-
       langCount--;
-      if(langCount === 0){
-        events.emit('translateComplete');
-      }
-    });
-  });
 
-  events.on('translateComplete', function(){
-    console.log(translations);
-    object.translations = translations;
-    callback(object);
+      if(langCount === 0){
+        object.translations = translations;
+        callback(object);
+      }
+
+    });
+
   });
 };
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/index.html');
-});
+// Define a message handler
+io.sockets.on('connection', function (socket) {
+  console.log('Got request from ' + socket.conn.request.headers.host);
 
-app.get('/send', function(req, res){
-  res.sendFile(__dirname + '/public/send.html');
-});
+  socket.on('translateEvent', function (msg) {
+    console.log('Received: ', msg.string);
 
-io.on('connection', function(socket){
-  socket.on('translateEvent', function(translateObject){
-
-    translateText(translateObject, function(o){
-      io.emit('translatedObject', o);
+    translateText(msg, function(translatedText){
+      translatedText.timestamp = new Date().toISOString();
+      translated.push(translatedText);
+      socket.broadcast.emit('translateEvent', translatedText);
     });
-
   });
-
-
-
-});
-
-http.listen(port, function(){
-  console.log('listening on *:' + port);
+  // send messages to new clients
+  /*translated.forEach(function(msg) {
+    console.log('Sending history');
+    socket.broadcast.emit('historyEvent');
+    socket.send(msg);
+  });*/
 });
