@@ -23,11 +23,6 @@ p{
 	margin-left: auto;
 	margin-right: auto;
 	transition:width 0.5s ease;
-	border:none;
-}
-
-.panel-heading{
-	background: #fff !important;
 }
 
 .panel:nth-child(1) h3{
