@@ -1,0 +1,56 @@
+/*style.css*/
+
+.container{
+	text-align: center;
+}
+
+img{
+	width:6.5em;
+	height: auto;
+	display:block;
+	position: absolute;
+	left: 1em;
+	top:1em;
+}
+
+p{
+	margin-top: 1.5em;
+	display: inline-block;
+	width: auto;
+}
+
+.panel{
+	margin-left: auto;
+	margin-right: auto;
+	transition:width 0.5s ease;
+	border:none;
+}
+
+.panel-heading{
+	background: #fff !important;
+}
+
+.panel:nth-child(1) h3{
+	font-size: 2.75em;
+    line-height: 1.5em;
+}
+
+.panel:nth-child(2){
+	opacity: 0.8;
+	width:95%;
+}
+
+.panel:nth-child(3){
+	opacity: 0.7;
+	width:90%;
+}
+
+.panel:nth-child(4){
+	opacity: 0.6;
+	width:85%;
+}
+
+.panel:nth-child(5){
+	opacity: 0.6;
+	width:85%;
+}
