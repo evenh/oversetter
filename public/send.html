@@ -3,23 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>Oversett tekst</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <meta name="viewport" content="initial-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="css/ratchet.min.css">
+  <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
+  <script src="js/ratchet.js"></script>
+  <style>
+    .container {
+      margin-left: 1em;
+      margin-right: 1em;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Oversett tekst</h1>
-    </header>
-    <form role="form" action="">
-      <div class="form-group">
-        <label for="inputText">Tekst</label>
-        <textarea class="form-control" id="inputText" rows="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia blanditiis facilis adipisci consectetur nisi quam sapiente, totam obcaecati optio? Quisquam ullam explicabo, quasi neque impedit quis sint adipisci saepe, harum."></textarea>
-      </div>
+  <header class="bar bar-nav">
+    <h1 class="title">Multioversetter</h1>
 
-      <button type="submit" class="btn btn-default">Oversett!</button>
+  </header>
+
+  <div class="content">
+    <p class="content-padded">Skriv inn teksten nedenfor du ønsker å få oversatt til engelsk, italiensk, fransk og svensk</p>
+
+    <form class="content-padded">
+      <textarea id="inputText" rows="2" placeholder="Skriv på norsk…"></textarea>
+      <button class="btn btn-positive btn-block">Oversett!</button>
     </form>
+
+
   </div>
+
   <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.js"></script>
   <script>
