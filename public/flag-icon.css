@@ -1,3 +1,7 @@
+/*
+Minor modifications added
+*/
+
 .flag-icon-background {
     background-size: contain;
     background-position: 50%;
@@ -1272,10 +1276,10 @@
     background-image: url(./flags/1x1/st.svg);
 }
 .flag-icon-sv {
-    background-image: url(./flags/4x3/sv.svg);
+    background-image: url(./flags/4x3/se.svg);
 }
 .flag-icon-sv.flag-icon-squared {
-    background-image: url(./flags/1x1/sv.svg);
+    background-image: url(./flags/1x1/se.svg);
 }
 .flag-icon-sx {
     background-image: url(./flags/4x3/sx.svg);

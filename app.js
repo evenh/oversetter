@@ -17,7 +17,7 @@ var bt = require('bing-translate').init({
 
 
 var translated = [];
-var languages = ['en', 'it', 'fr', 'ru'];
+var languages = ['en', 'it', 'fr', 'sv'];
 var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));

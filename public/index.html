@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Oversettelser</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="bootstrap.min.css">
   <link rel="stylesheet" href="animate.css">
   <link rel="stylesheet" href="flag-icon.css">
   <link rel="stylesheet" href="style.css">
@@ -16,16 +17,19 @@
 </style>
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-static-top">
+  <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
-      <!-- <img src="hioa.png" alt="HiOA Logo" title="HiOA Logo" /> -->
-      <p><strong>Klikk deg inn og skriv inn tekst som skal oversettes</strong></p>
-      <h1 class="text-center text-danger"><script>document.write(document.URL);</script>send</h1>
+      <h1 class="text-center">
+        <span>Åpne denne adressen på din mobil: </span>
+        <span class="text-danger">
+          <script>document.write(document.URL);</script>send
+        </span>
+      </h1>
     </div>
   </nav>
   <div id="mainContainer" class="container">
 
-  <section id="translationHolder">
+    <section id="translationHolder">
       <h1 id="noTranslations" class="text-muted text-center">Ingen oversettelser enda…</h1>
     </section>
   </div>
