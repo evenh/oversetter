@@ -87,6 +87,7 @@
         $("#warning").hide();
         socket.emit('translateEvent', { string: $('#inputText').val() });
         $("#inputText").val('');
+        updateCountdown();
         return false;
       });
     });
