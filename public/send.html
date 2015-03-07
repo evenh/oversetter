@@ -8,49 +8,88 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="css/ratchet.min.css">
   <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
-  <script src="js/ratchet.js"></script>
   <style>
-    .container {
-      margin-left: 1em;
-      margin-right: 1em;
+    .alert {
+      padding: .5em;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .alert-warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+    }
+
+    .footer-title {
+      color: #ccc;
+      font-size: .7em;
+      font-weight: normal;
     }
   </style>
 </head>
 <body>
   <header class="bar bar-nav">
     <h1 class="title">Multioversetter</h1>
-
   </header>
 
+  <div class="bar bar-standard bar-footer">
+    <p class="title footer-title">
+      Åpen dag @ HiOA 12. mars &mdash; Laget av <a href="http://evenh.net" target="_blank">Even</a> &amp; <a href="http://www.tildesolutions.no/" target="_blank">Lars H</a>.
+      </p>
+  </div>
+
   <div class="content">
-    <p class="content-padded">Skriv inn teksten nedenfor du ønsker å få oversatt til engelsk, italiensk, fransk og svensk</p>
+    <div id="warning" class="content-padded alert alert-warning" role="alert" style="display: none">…</div>
+
+    <p class="content-padded">Oversett en tekst til engelsk, italiensk, fransk og svensk. Resultatet dukker opp på skjermen ved standen.</p>
 
     <form class="content-padded">
-      <textarea id="inputText" rows="2" placeholder="Skriv på norsk…"></textarea>
+      <p class="countdown pull-right"></p>
+      <textarea id="inputText" rows="2" placeholder="Skriv på norsk…" maxlength="140"></textarea>
       <button class="btn btn-positive btn-block">Oversett!</button>
     </form>
-
 
   </div>
 
   <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.js"></script>
   <script>
-  $(function(){
-    var socket = io.connect();
-    socket.on('connect', function () {
-      console.log('Connected to server');
-      socket.on('disconnect', function() {
-        console.log('Disconnected');
+    function updateCountdown() {
+      var remaining = 140 - jQuery('#inputText').val().length;
+      jQuery('.countdown').text(remaining + '/140 tegn gjenstår');
+    }
+
+    $(function(){
+      updateCountdown();
+      $('#inputText').change(updateCountdown);
+      $('#inputText').keyup(updateCountdown);
+
+      var socket = io.connect();
+      socket.on('connect', function () {
+        console.log('Connected to server');
+
+        socket.on('disconnect', function() {
+          console.log('Disconnected');
+        });
+
+        socket.on('lengthConstraint', function(msg){
+          $("#warning").html('<strong>Avvist!</strong> ' + msg).show();
+        });
+
+        socket.on('profanityConstraint', function(msg){
+          $("#warning").html('<strong>Avvist!</strong> ' + msg).show();
+        });
+
+      });
+
+      $('form').submit(function(){
+        $("#warning").hide();
+        socket.emit('translateEvent', { string: $('#inputText').val() });
+        $("#inputText").val('');
+        return false;
       });
     });
-
-    $('form').submit(function(){
-      socket.emit('translateEvent', { string: $('#inputText').val() });
-      $('#inputText').val('');
-      return false;
-    });
-  });
-</script>
+  </script>
 </body>
 </html>

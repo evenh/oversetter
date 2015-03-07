@@ -15,11 +15,18 @@ var bt = require('bing-translate').init({
   client_secret: process.env.BING_SECRET
 });
 
+// Validation constants
+var MESSAGE_MAX_LENGTH = 140;
+var PROFANITY_WORDS = ['kuk', 'fitte', 'balle', 'penis', 'vagina', 'pikk', 'dåse', 'idiot', 'suge', 'pupp', 'drit', 'bæsj', 'dust'];
 
+// Translation specific variables
 var translated = [];
 var languages = ['en', 'it', 'fr', 'sv'];
+
+// Port to run under. Determine from the environment if possible
 var port = process.env.PORT || 3000;
 
+// Serve static assets
 app.use(express.static(__dirname + '/public'));
 
 app.get('/send', function(req, res){
@@ -27,7 +34,7 @@ app.get('/send', function(req, res){
 });
 
 http.listen(port, function(){
-  console.log('listening on *:' + port);
+  console.log('Serving translation requests at port ' + port);
 });
 
 
@@ -51,6 +58,30 @@ var translateText = function(object, callback){
   });
 };
 
+var validateText = function(msg, socket, callback){
+  var text = msg.string;
+  var failed = false;
+
+  // Validate max length
+  if(text.length > MESSAGE_MAX_LENGTH){
+    socket.emit('lengthConstraint', 'Meldingen din overstiger 140 tegn');
+    failed = true;
+  }
+
+  // Check for profanity
+  text.toLowerCase().split(' ').forEach(function(w){
+    PROFANITY_WORDS.forEach(function(p){
+      if(w.indexOf(p) > -1){
+        socket.emit('profanityConstraint', 'Meldingen din inneholdet et uønsket ord: ' + p + ' (i ordet "' + w +'").');
+        failed = true;
+      }
+    });
+
+  });
+
+  return failed === true ? callback(false) : callback(msg);
+};
+
 // Define a message handler
 io.sockets.on('connection', function (socket) {
   console.log('Got request from ' + socket.conn.request.headers.host);
@@ -58,16 +89,17 @@ io.sockets.on('connection', function (socket) {
   socket.on('translateEvent', function (msg) {
     console.log('Received: ', msg.string);
 
-    translateText(msg, function(translatedText){
-      translatedText.timestamp = new Date().toISOString();
-      translated.push(translatedText);
-      socket.broadcast.emit('translateEvent', translatedText);
+    // If validation fails, do not translate
+    validateText(msg, socket, function(response){
+      if(!response) return console.log('\tMessage failed validation, will not translate');
+
+      translateText(response, function(translatedText){
+        translatedText.timestamp = new Date().toISOString();
+        translated.push(translatedText);
+        socket.broadcast.emit('translateEvent', translatedText);
+      });
     });
+
   });
-  // send messages to new clients
-  /*translated.forEach(function(msg) {
-    console.log('Sending history');
-    socket.broadcast.emit('historyEvent');
-    socket.send(msg);
-  });*/
+
 });
