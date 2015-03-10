@@ -36,7 +36,7 @@
   <div class="bar bar-standard bar-footer">
     <p class="title footer-title">
       Åpen dag @ HiOA 12. mars &mdash; Laget av <a href="http://evenh.net" target="_blank">Even</a> &amp; <a href="http://www.tildesolutions.no/" target="_blank">Lars H</a>.
-      </p>
+    </p>
   </div>
 
   <div class="content">
@@ -77,6 +77,10 @@
           $("#warning").html('<strong>Avvist!</strong> ' + msg).show();
         });
 
+        socket.on('emptyConstraint', function(msg){
+          $("#warning").html('<strong>Avvist!</strong> ' + msg).show();
+        });
+
         socket.on('profanityConstraint', function(msg){
           $("#warning").html('<strong>Avvist!</strong> ' + msg).show();
         });
@@ -91,6 +95,6 @@
         return false;
       });
     });
-  </script>
+</script>
 </body>
 </html>
