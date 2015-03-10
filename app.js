@@ -89,7 +89,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('translateEvent', function (msg) {
     console.log('Received: ', msg.string);
 
-    if(!msg.string || msg.string === '') return socket.emit('emptyConstraint', 'Meldingen kan ikke være tom');
+    if(!msg.string || msg.string === '' || msg.string.trim() === '') return socket.emit('emptyConstraint', 'Meldingen kan ikke være tom');
 
     // If validation fails, do not translate
     validateText(msg, socket, function(response){
