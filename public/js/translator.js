@@ -1,5 +1,7 @@
 'use strict';
 
+var counter = 0;
+
 $(function(){
   jQuery.timeago.settings.strings = {
     prefixAgo: "for",
@@ -35,6 +37,9 @@ $(function(){
     }
 
     msg += p5;
+
+    counter++;
+
     return msg;
   };
 
@@ -50,6 +55,10 @@ $(function(){
       $('#translationHolder').prepend(formatMessage(message));
       $(".translationBox").first().addClass('animated bounceInRight');
       jQuery('time.timeago').timeago();
+
+      $('.counter').text(counter + (counter == 1 ? ' oversettelse' : ' oversettelser'));
+
+      $(".counter:hidden").show();
     });
 
     socket.on('disconnect', function() {

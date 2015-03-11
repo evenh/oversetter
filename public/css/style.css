@@ -4,6 +4,21 @@
 	text-align: center;
 }
 
+.table-nonfluid {
+  width: auto !important;
+}
+
+.ip {
+  font-style: italic;
+  font-size: .8em;
+}
+
+.counter {
+  margin: .9em 0em 0em 1em;
+  font-size: 1.5em;
+  display: none;
+}
+
 img{
 	width:6.5em;
 	height: auto;
