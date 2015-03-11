@@ -3,9 +3,6 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
-var EventEmitter = require('events').EventEmitter;
-var events = new EventEmitter();
-
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -41,6 +38,8 @@ http.listen(port, function(){
 var translateText = function(object, callback){
   var langCount = languages.length;
   var translations = {};
+
+  console.log('...\tValidation passed. Translating with Bing.');
 
   languages.forEach(function(lang){
     bt.translate(object.string, process.env.DEFAULT_LANGUAGE, lang, function(err, res){
@@ -84,20 +83,21 @@ var validateText = function(msg, socket, callback){
 
 // Define a message handler
 io.sockets.on('connection', function (socket) {
-  console.log('Got request from ' + socket.conn.request.headers.host);
+  console.log('--> Connected to ' + socket.handshake.address);
 
   socket.on('translateEvent', function (msg) {
-    console.log('Received: ', msg.string);
+    console.log('...\tReceived string: ', msg.string);
 
     if(!msg.string || msg.string === '' || msg.string.trim() === '') return socket.emit('emptyConstraint', 'Meldingen kan ikke være tom');
 
     // If validation fails, do not translate
     validateText(msg, socket, function(response){
-      if(!response) return console.log('\tMessage failed validation, will not translate');
+      if(!response) return console.log('!!!\tMessage failed validation, will not translate');
 
       translateText(response, function(translatedText){
         translatedText.timestamp = new Date().toISOString();
         translated.push(translatedText);
+        console.log('<--\tTranslation done. Emitting results.');
         socket.broadcast.emit('translateEvent', translatedText);
       });
     });

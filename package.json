@@ -1,7 +1,7 @@
 {
   "name": "hioa-translator",
   "version": "1.0.0",
-  "description": "A simple online translator",
+  "description": "A simple online translator created for the open day @ HiOA 2015",
   "main": "app.js",
   "private": true,
   "scripts": {
@@ -24,6 +24,5 @@
   "engines": {
     "node": "0.10.x",
     "npm": "1.4.x"
-
   }
 }
