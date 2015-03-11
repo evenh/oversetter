@@ -83,7 +83,8 @@ var validateText = function(msg, socket, callback){
 
 // Define a message handler
 io.sockets.on('connection', function (socket) {
-  console.log('--> Connected to ' + socket.handshake.address);
+  var remoteIp = process.env.NODE_ENV !== 'production' ? socket.handshake.address : socket.handshake.headers['x-forwarded-for'];
+  console.log('--> Connected to ' + remoteIp);
 
   socket.on('translateEvent', function (msg) {
     console.log('...\tReceived string: ', msg.string);
