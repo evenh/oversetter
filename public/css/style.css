@@ -27,7 +27,6 @@ p{
 
 .panel:nth-child(1) h3{
 	font-size: 2.75em;
-  line-height: 1.5em;
 }
 
 .panel:nth-child(2){
@@ -35,9 +34,17 @@ p{
 	width:95%;
 }
 
+.panel:nth-child(2) h3{
+  font-size: 2.5em;
+}
+
 .panel:nth-child(3){
 	opacity: 0.7;
 	width:90%;
+}
+
+.panel:nth-child(3) h3{
+  font-size: 2em;
 }
 
 .panel:nth-child(4){
@@ -45,9 +52,17 @@ p{
 	width:85%;
 }
 
+.panel:nth-child(4) h3{
+  font-size: 1.75em;
+}
+
 .panel:nth-child(5){
 	opacity: 0.6;
 	width:85%;
+}
+
+.panel:nth-child(5) h3{
+  font-size: 1.5em;
 }
 
 .navbar {

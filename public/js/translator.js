@@ -22,18 +22,19 @@ $(function(){
   var socket = io.connect();
 
   var p1 = '<div class="panel panel-default translationBox"><div class="panel-heading"><h3 class="panel-title pull-left">';
-  var p2 = '</h3><time class="pull-right timeago" datetime="';
-  var p3 = '"></time><span class="clearfix"></span></div><div class="panel-body">';
-  var p4 = '</div></div>';
+  var p2 = '</h3><section class="pull-right"><time class="timeago" datetime="';
+  var p3 = '"></time><br><span class="ip">IP: ';
+  var p4 = '</span></section><span class="clearfix"></span></div><div class="panel-body">';
+  var p5 = '</div></div>';
 
   var formatMessage = function(object){
-    var msg = p1 + object.string + p2 + object.timestamp + p3;
+    var msg = p1 + object.string + p2 + object.timestamp + p3 + object.ip + p4;
 
     for(var lang in object.translations){
       msg += '<div class="media"><div class="media-left"><a href="#"><span class="media-object flag-icon flag-icon-' + lang + '"></span></a></div><div class="media-body"><h4 class="media-heading">' + object.translations[lang] + '</h4></div></div>';
     }
 
-    msg += p4;
+    msg += p5;
     return msg;
   };
 

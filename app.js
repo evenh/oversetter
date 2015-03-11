@@ -87,7 +87,7 @@ io.sockets.on('connection', function (socket) {
   console.log('--> Connected to ' + remoteIp);
 
   socket.on('translateEvent', function (msg) {
-    console.log('...\tReceived string: ', msg.string);
+    console.log('-->\tReceived string: ', msg.string);
 
     if(!msg.string || msg.string === '' || msg.string.trim() === '') return socket.emit('emptyConstraint', 'Meldingen kan ikke være tom');
 
@@ -96,6 +96,7 @@ io.sockets.on('connection', function (socket) {
       if(!response) return console.log('!!!\tMessage failed validation, will not translate');
 
       translateText(response, function(translatedText){
+        translatedText.ip = remoteIp;
         translatedText.timestamp = new Date().toISOString();
         translated.push(translatedText);
         console.log('<--\tTranslation done. Emitting results.');
