@@ -14,7 +14,9 @@ var bt = require('bing-translate').init({
 
 // Validation constants
 var MESSAGE_MAX_LENGTH = 140;
-var PROFANITY_WORDS = ['kuk', 'fitte', 'balle', 'penis', 'vagina', 'pikk', 'dåse', 'idiot', 'suge', 'pupp', 'drit', 'bæsj', 'dust'];
+var PROFANITY_WORDS = ['kuk', 'fitte', 'balle', 'penis', 'vagina', 'pikk', 'dåse', 'idiot',
+'suge', 'pupp', 'drit', 'bæsj', 'dust', 'tiss', 'promp', 'prump', 'drit', 'jævel', 'jævla',
+'jævlig', 'jævelig', 'blowjob'];
 
 // Translation specific variables
 var translated = [];
